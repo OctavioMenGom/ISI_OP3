@@ -53,59 +53,47 @@
                         <td><input type="checkbox" name="Pre cotización" value="pre-cotizacion"></td> 
                         <td>Cotización</td>
                         <td><input type="checkbox" name="Cotización" value="Cotización" /></td>
-
+                        <td>Fecha</td>
 
                     </tr>
                     <tr>
                         <td>Empresa</td>
-                        <td>                            <div style="display: flex; align-items: center;">
+                        <td>
+                            <div style="display: flex; align-items: center;">
                             <select id="empresa_options" name="empresa_options" class="dropdown">
                                 <option value="null">Selecciona empresa</option>
                                 <option value="ISI">ISI</option>
                                 <option value="MSC">MSC</option>
                                 <option value="BSC">MIC</option>
-                                <option value="ISIN">ISIN</option>
                             </select>
-                        </div></td>
+                        </div>
+                        </td>
                         <td></td>
                         <td></td>
                         <td>Zona</td>
                         <td>
                             <div style="display: flex; align-items: center;">
                                 <select id="empresa_options" name="empresa_options" class="dropdown">
-                                    <option value="null">Selecciona empresa</option>
-                                    <option value="ISI">ISI</option>
-                                    <option value="MSC">MSC</option>
-                                    <option value="BSC">MIC</option>
-                                    <option value="ISIN">ISIN</option>
+                                    <option value="null">Selecciona zona...</option>
+                                    <option value="Puebla">PUE</option>
+                                    <option value="Queretaro">QRO</option>
                                 </select>
                             </div>
-
                         </td>
-
+                        <td>
+                        <input type="date"/>
+                        </td>
                     </tr>
+  
                  </table>
              </div>
  
             <table border="1">
                 <tr>
-                    <th></th>
-                    <th>Gastos</th> 
-                    <th></th>
-                    <th>Fecha</th>
-                    <th><input type="date"/></th>
-                </tr>
-                <tr>
-                    <td><b>FORMA DE PAGO</b></td>
+                    <td>Atiende</td>
                     <td>
                         <div style="display: flex; align-items: center;">
-                            <select id="pago_options1" name="pago_options1" class="dropdown" style="margin-right: 10px;">
-                                <option value="null">Opción de pago</option>
-                                <option value="tarjeta">Tarjeta</option>
-                                <option value="efectivo">Efectivo</option>
-                                <option value="transferencia">Transferencia</option>
-                            </select>
-                            <input type="text" id="ReferenciaDePago" name="ReferenciaDePago" placeholder="Referencia de Pago">
+                            <input type="text" id="IDtrabajador" name="IDtrabajador" placeholder="¿Quién atiende?">
                         </div>
                     </td>
                     <td>
@@ -115,41 +103,20 @@
                     <td>Revolvedora</td>
                 </tr>
                 <tr>
-                    <td><b>FACT/TICKET</b></td>
-                    <td><input type="text" name="input2_row0" /></td> 
+                    <td>No.Cliente</td>
+                    <td><input type="text" id="IDCliente"name="IDCliente" placeholder="¿Cuál es el número del cliente?"/></td> 
                     <td>Servicio</td>
                     <td><input type="checkbox"/></td>
                     <td><input type="checkbox"/></td>
                 </tr>
                 <tr>
-                    <td><b>MONTO</b></td>
-                    <td><input type="text" id="totalMonto" name="totalMonto" readonly/></td> 
+                    <td>Cliente</td>
+                    <td><input type="text" id="Cliente" name="Cliente" placeholder="¿Quién es el cliente?"/></td> 
                     <td>Mov/Trasl</td>
                     <td><input type="checkbox"/></td>
                     <td><input type="checkbox"/></td>
                 </tr>
-            </table>
-             <div class="input-list">
-                <div class="input-container">
-                    <label for="atiende">Atiende</label>
-                    <input type="number" id="atiende" name="nombre_atiende" placeholder="¿Quién atiende?">
-                </div>
-                
-                <div class="input-container">
-                    <label for="número Cliente">No. Cliente</label>
-                    <input type="number" id="número cliente" name="número_cliente" placeholder="¿Cuál es el no. cliente?">
-                </div> 
-
-                <div class="input-container">
-                    <label for="cliente">Cliente</label>
-                    <input type="text" id="cliente" name="cliente" placeholder="¿Quién es el cliente?">
-                </div>
-
-                <div class="input-container">
-                    <label for="solicita">Solicita</label>
-                    <input type="text" id="solicita" name="nombre_solicitante" placeholder="¿Quién lo solicita?">
-                </div>
-            </div>   
+            </table>   
             <p></p>
             <div class="input-list">
                 <div class="input-container">
