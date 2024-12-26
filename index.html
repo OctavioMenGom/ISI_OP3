@@ -5,7 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pre Cotización</title>
     <link rel="stylesheet" type="text/css" href="ISI.css">
-    <script src="scripts.js" defer></script>
+    <script>
+        function changeLogo() {
+            console.log('changeLogo function called'); // Agrega esta línea
+            var empresa = document.getElementById('empresa_options').value;
+            var logoContainer = document.getElementById('logo-container');
+            
+            if (empresa === 'ISI') {
+                logoContainer.innerHTML = '<img src="images/Logo ISI simple.png" alt="Logo ISI simple">';
+            } else if (empresa === 'CSM') {  
+                logoContainer.innerHTML = '<img src="images/Logo CSM sello.png" alt="Logo CSM">';
+            } else if (empresa === 'MIC') {
+                logoContainer.innerHTML = '<img src="images/logo mic.jpg" alt="Logo MIC">';
+            } else {
+                logoContainer.innerHTML = `
+                    <img src="images/Logo ISI simple.png" alt="Logo ISI simple">
+                    <img src="images/Logo CSM sello.png" alt="Logo CSM">
+                    <img src="images/logo mic.jpg" alt="Logo MIC">
+                `;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            changeLogo();
+        });
+
+        function generateFolio() {
+            var folio = Math.random().toString(36).substring(2, 8).toUpperCase();
+            document.getElementById('folio').value = folio;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const url = 'https://script.google.com/macros/s/AKfycbxtmQt8O_g7auWw4P2Ay2Xy-KrmwMasp38cbkPOyP7lR2LRIusOZOp0AMbJvOxAkvtu/exec';
+
+            fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Datos obtenidos:', data); // Verificar los datos obtenidos
+                const select1 = document.getElementById('selectorHoja1');
+                const select2 = document.getElementById('selectorHoja2');
+
+                // Verificar que los elementos select se obtienen correctamente
+                console.log('select1:', select1);
+                console.log('select2:', select2);
+
+                if (data['BD PERSONAL OP.']) {
+                    console.log('Datos de Hoja1:', data['BD PERSONAL OP.']);
+                    data['BD PERSONAL OP.'].forEach(row => {
+                        const option = document.createElement('option');
+                        option.text = row.join(' - ');
+                        select1.add(option);
+                        console.log('Añadida opción a select1:', option);
+                    });
+                } else {
+                    console.warn('No se encontraron datos para Hoja1');
+                }
+
+                if (data['BD CLIENTES']) {
+                    console.log('Datos de Hoja2:', data['BD CLIENTES']);
+                    data['BD CLIENTES'].forEach(row => {
+                        const option = document.createElement('option');
+                        option.text = row.join(' - ');
+                        select2.add(option);
+                        console.log('Añadida opción a select2:', option);
+                    });
+                } else {
+                    console.warn('No se encontraron datos para Hoja2');
+                }
+            })
+            .catch(error => {
+                console.error('Hubo un problema con la operación fetch:', error);
+            });
+        });
+    </script>
 </head>
 <body>
     <nav class="navbar">
@@ -28,10 +105,8 @@
     <div class="container">
         <div class="header">
             <h3>Folio Pre Cotización</h3>
-            <div class="logo-container">
-                <img src="images\Logo ISI simple.png" alt="Logo ISI simple">
-                <img src="images\logo mic.jpg" alt="Logo mic">
-                <img src="images\Logo CSM sello.png" alt="Logo CSM Sello">
+            <div class="logo-container" id="logo-container">
+                <!-- Los logos se mostrarán aquí -->
             </div>
         </div>
         <p></p>
@@ -48,23 +123,27 @@
                 <table border="1"> 
                     <tr>
                         <td>Folio</td>
-                        <td><input type="text" name="Folio" placeholder="No. Folio"/></td>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <input type="text" id="folio" name="Folio" placeholder="Folio generado automáticamente" readonly/>
+                                <button type="button" onclick="generateFolio()">Generar Folio</button>
+                            </div>
+                        </td>
                         <td>Pre cotización</td>
                         <td><input type="checkbox" name="Pre cotización" value="pre-cotizacion"></td> 
                         <td>Cotización</td>
                         <td><input type="checkbox" name="Cotización" value="Cotización" /></td>
                         <td>Fecha</td>
-
                     </tr>
                     <tr>
                         <td>Empresa</td>
                         <td>
                             <div style="display: flex; align-items: center;">
-                            <select id="empresa_options" name="empresa_options" class="dropdown">
+                            <select id="empresa_options" name="empresa_options" class="dropdown" onchange="changeLogo()">
                                 <option value="null">Selecciona empresa</option>
                                 <option value="ISI">ISI</option>
-                                <option value="MSC">MSC</option>
-                                <option value="BSC">MIC</option>
+                                <option value="CSM">MSC</option>  
+                                <option value="MIC">MIC</option>
                             </select>
                         </div>
                         </td>
@@ -73,7 +152,7 @@
                         <td>Zona</td>
                         <td>
                             <div style="display: flex; align-items: center;">
-                                <select id="empresa_options" name="empresa_options" class="dropdown">
+                                <select id="zona_options" name="zona_options" class="dropdown">
                                     <option value="null">Selecciona zona...</option>
                                     <option value="Puebla">PUE</option>
                                     <option value="Queretaro">QRO</option>
@@ -84,7 +163,6 @@
                         <input type="date"/>
                         </td>
                     </tr>
-  
                  </table>
              </div>
  
@@ -92,26 +170,32 @@
                 <tr>
                     <td>Atiende</td>
                     <td>
-                        <div style="display: flex; align-items: center;">
-                            <input type="text" id="IDtrabajador" name="IDtrabajador" placeholder="¿Quién atiende?">
-                        </div>
+                        <select id="selectorHoja1">
+                            <option value="" disabled selected>¿Quién atiende?</option>
+                        </select>
                     </td>
-                    <td>
-
-                    </td>
+                    <td></td>
                     <td>Planta</td>
                     <td>Revolvedora</td>
                 </tr>
                 <tr>
-                    <td>No.Cliente</td>
-                    <td><input type="text" id="IDCliente"name="IDCliente" placeholder="¿Cuál es el número del cliente?"/></td> 
+                    <td>No. Cliente</td>
+                    <td>
+                        <select id="selectorHoja2">
+                            <option value="" disabled selected>¿Quién es el cliente?</option>
+                        </select>
+                    </td> 
                     <td>Servicio</td>
                     <td><input type="checkbox"/></td>
                     <td><input type="checkbox"/></td>
                 </tr>
                 <tr>
                     <td>Cliente</td>
-                    <td><input type="text" id="Cliente" name="Cliente" placeholder="¿Quién es el cliente?"/></td> 
+                    <td>
+                        <select id="selectorHoja2">
+                            <option value="" disabled selected>¿Quién es el cliente?</option>
+                        </select>
+                    </td> 
                     <td>Mov/Trasl</td>
                     <td><input type="checkbox"/></td>
                     <td><input type="checkbox"/></td>
@@ -129,5 +213,6 @@
     </div>
 </body>
 </html>
+
 
 
